@@ -50,7 +50,7 @@ typedef struct  {
     //for remote rcx
     uint8_t word_cnt;
     uint8_t bit_cnt;
-    uint16_t word[2];    //todo: allow for other size?  
+    uint8_t edge_a_bit;
 } tx_data;
 
 

@@ -85,7 +85,6 @@ void init(struct remote *r){
 
     r->tx_data.word_cnt = 2;
     r->tx_data.bit_cnt = r->bit_cnt;
-    r->tx_data.word[0] = 0;    //todo: allow for other size?  
-    r->tx_data.word[1] = 0;
+    r->tx_data.edge_a_bit = 0;
 }
 

@@ -19,13 +19,9 @@ static inline uint16_t reverse(uint16_t data, int bits)
 }
 
 void tx_pulse_space(struct remote* r, uint16_t key) {
-    uint16_t d;
-    reverse(r->pre_code,4);
-    
     switch (r->state) {
-        case idle: //ignore first edge
+        case idle: //not needed in tx
             r->state = header_a;
-            break;
         case header_a:
             if (r->hdr_time_a != 0) {
                 RF_OUT = ~RF_OUT;
@@ -39,42 +35,37 @@ void tx_pulse_space(struct remote* r, uint16_t key) {
             WriteTxTimer(0xFFFF - r->hdr_time_b);
             break;
         case first_edge:
-            RF_OUT = ~RF_OUT;
-            if (r->tx_data.word_cnt > 0) {
-                if (r->tx_data.bit_cnt > 0 ) {
-                    if (r->tx_data.word_cnt == 0) {
-                        d = r->pre_code;
-                    } else if (r->tx_data.word_cnt == 1) {
-                        d = key;
-                    }
-                    
-                    //    WriteTxTimer(0xFFFF - );
-                     r->tx_data.bit_cnt--;
-                }
-                    r->tx_data.word_cnt--;}
-            
-                
+             RF_OUT = ~RF_OUT;
+            if (r->bit_cnt > 15) {
+                r->tx_data.edge_a_bit = r->pre_code & (1 << r->bit_cnt - 16);
+            } else {
+                r->tx_data.edge_a_bit = key & (1 << r->bit_cnt);
+            }
+            r->state = second_edge;
+            if (r->tx_data.edge_a_bit) WriteTxTimer(0xFFFF - r->high_1);
+            else {
+                WriteTxTimer(0xFFFF - r->low_0);
+            }
             break;
         case second_edge:
             RF_OUT = ~RF_OUT;
-/*            if (tmp) WriteTxTimer(0xFFFF - pollin_rf_rc.low_1);
+            if (r->tx_data.edge_a_bit) WriteTxTimer(0xFFFF - r->low_1);
             else {
-                WriteTxTimer(0xFFFF - pollin_rf_rc.high_0);
+                WriteTxTimer(0xFFFF - r->high_0);
             }
-            if (bit_cnt > 0) {
-                bit_cnt--;
-                rf_tx_fsm.state = first_edge;
+            if (r->bit_cnt > 0) {
+                r->bit_cnt--;
+                r->state = first_edge;
             } else {
-                rf_tx_fsm.state = done;
-            }*/
+                r->state = done;
+            }
             break;
         case done:
-/*            RF_OUT = 0; //last edge must be  zero
-            bit_cnt = 19;
-            rf_tx_fsm.state = idle;
-            code_to_send.code = 0;
-            code_to_send.rc = 0;
-            break; */
+            RF_OUT = 0; //last edge must be  zero
+            r->bit_cnt = 19;
+            r->tx_data.edge_a_bit = 0;
+            r->state = idle;
+            break; 
         default:
             break;
     }

@@ -18,3 +18,10 @@ void rf_tx_start() {
 void ir_tx_stop() {
     CloseTxTimer();
 }
+
+void TransmitISR() {
+     if (INTCONbits.TMR0IF) {
+        pollin_rf_rc.tx_func(&pollin_rf_rc);
+        INTCONbits.TMR0IF = 0;
+    }
+ }

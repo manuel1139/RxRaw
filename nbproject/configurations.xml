@@ -42,6 +42,7 @@
       <itemPath>receive_pulse_space.h</itemPath>
       <itemPath>capture.h</itemPath>
       <itemPath>transmit_pulse_space.h</itemPath>
+      <itemPath>transmitter.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

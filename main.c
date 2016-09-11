@@ -11,6 +11,7 @@
 #include "app_device_custom_hid.h"
 
 #include "receiver.h"
+#include "transmitter.h"
 #include "remote.h"
 
 
@@ -41,6 +42,8 @@ int main(void) {
     r->init(r);
 //ir_rx_init...    
     ir_rx_start();
+    
+    rf_tx_start();
     pollin_rf_rc.tx_func(&pollin_rf_rc, S1_ON);
     
     while (1) {
@@ -117,6 +120,8 @@ void high_priority interrupt high_isr(void) {
     USBDeviceTasks();
         
     ReceiveISR();
+    
+    TransmitISR();
     
 }
 
