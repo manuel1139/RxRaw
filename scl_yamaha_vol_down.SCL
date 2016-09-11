@@ -21,7 +21,7 @@ variable s : text;
 
     begin
         CCP1 <= '1';  --active low receiver
-        wait for 13000 ic;
+        wait for 22000 ic;
         
         file_open(status, data_file, "C:\Users\manuel\Documents\MPLABX\InWork\RxRaw\yamaha_vol_down.txt", read_mode);
         if status == open_ok then
@@ -29,15 +29,15 @@ variable s : text;
             while endfile(data_file) == false loop
                 readline(data_file, data_line);
                 read(data_line, data_point);
-                wait for data_point;
-                report "CCP0";
+                report "CCP1 to 0";
                 CCP1 <= '0';
+                wait for data_point;
                 if endfile(data_file) == false then
                   readline(data_file, data_line);
                   read(data_line, data_point);
-                  wait for data_point;
-                  report "CCP1";
+                  report "CCP1 to 1";
                   CCP1 <= '1';
+                  wait for data_point;
                 end if;
              end loop;
         end if;

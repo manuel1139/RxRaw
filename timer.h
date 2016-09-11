@@ -16,5 +16,9 @@ void OpenRxTimer();
 uint16_t ReadRxTimer();
 void WriteRxTimer(uint16_t val);
 
+void OpenTxTimer();
+void WriteTxTimer(uint16_t val);
+void CloseTxTimer();
+
 #endif	/* TIMER_H */
 

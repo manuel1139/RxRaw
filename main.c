@@ -11,6 +11,7 @@
 #include "app_device_custom_hid.h"
 
 #include "receiver.h"
+#include "remote.h"
 
 
 /*
@@ -35,8 +36,12 @@ int main(void) {
     USBDeviceInit();
     USBDeviceAttach();
 
+
+    struct remote *r = remotes[0];
+    r->init(r);
+//ir_rx_init...    
     ir_rx_start();
-   
+    pollin_rf_rc.tx_func(&pollin_rf_rc, S1_ON);
     
     while (1) {
         //Non USB tasks

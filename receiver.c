@@ -21,11 +21,13 @@ void ReceiveISR() {
     if (PIR1bits.CCP1IF) {
         //inverts edge detection 
         CCP1CONbits.CCP1M0 = ~CCP1CONbits.CCP1M0;
+        
+ //CCPR1H = TMR1H;  //debug only
         uint16_t cval = ReadRxCapture();
         rx_raw(cval);
         //struct  remote *r;
         //for (r; r != 0; r++); // r->pRcvFunc(r, cval);
-        terratec_ir_rc.rx_func(&terratec_ir_rc, cval);
+//        terratec_ir_rc.rx_func(&terratec_ir_rc, cval);
         yamaha_ir_rc.rx_func(&yamaha_ir_rc, cval);
         WriteRxTimer(0);
         PIR1bits.CCP1IF = 0;
@@ -39,6 +41,7 @@ void ReceiveISR() {
 
 
 void ir_rx_start() {
+    
     CCPR1 = 0; //Timer data register zero (word)
 
     if (PORTCbits.RC2 == 1) {
@@ -52,3 +55,4 @@ void ir_rx_start() {
 void ir_rx_stop() {
     CloseRxCapture();
 }
+
