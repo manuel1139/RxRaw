@@ -31,17 +31,14 @@ void tx_pulse_space(struct remote* r) {
                 r->tx_data.edge_a_bit = r->tx_data.code_to_send & (1 << r->tx_data.bit_cnt - 1);
             }
             r->state = second_edge;
-            if (r->tx_data.edge_a_bit) WriteTxTimer(0xFFFF - r->high_1);
-            else {
+            r->tx_data.edge_a_bit ? WriteTxTimer(0xFFFF - r->high_1) :
                 WriteTxTimer(0xFFFF - r->low_0);
-            }
             break;
         case second_edge:
             RF_OUT = ~RF_OUT;
-            if (r->tx_data.edge_a_bit) WriteTxTimer(0xFFFF - r->low_1);
-            else {
+            r->tx_data.edge_a_bit ? WriteTxTimer(0xFFFF - r->low_1) :
                 WriteTxTimer(0xFFFF - r->high_0);
-            }
+
             if (r->tx_data.bit_cnt > 1) {
                 r->tx_data.bit_cnt--;
                 r->state = first_edge;
