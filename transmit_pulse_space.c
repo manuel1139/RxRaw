@@ -9,7 +9,6 @@
 void tx_pulse_space(struct remote* r) {
     switch (r->state) {
         case idle: //not needed in tx
-            r->init(r);
             r->state = header_a;
         case header_a:
             if (r->hdr_time_a != 0) {
@@ -36,20 +35,22 @@ void tx_pulse_space(struct remote* r) {
             break;
         case second_edge:
             RF_OUT = ~RF_OUT;
-            r->tx_data.edge_a_bit ? WriteTxTimer(0xFFFF - r->low_1) :
-                WriteTxTimer(0xFFFF - r->high_0);
-
             if (r->tx_data.bit_cnt > 1) {
                 r->tx_data.bit_cnt--;
                 r->state = first_edge;
             } else {
-                r->state = done;
+                r->state = tail;
             }
+            r->tx_data.edge_a_bit ? WriteTxTimer(0xFFFF - r->low_1) :
+                WriteTxTimer(0xFFFF - r->high_0);
+            break;
+        case tail:
+            RF_OUT = 0; //last edge must be low
+            WriteTxTimer(0x0F00);  //trailing pulse       
+            r->state = done;
             break;
         case done:
-            RF_OUT = 0; //last edge must be  zero
-            WriteTxTimer(0x0F00);
-            //r->init(r);
+            r->init(r);
             break;
         default:
             break;

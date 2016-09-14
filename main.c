@@ -35,7 +35,7 @@ int main(void) {
     USBDeviceInit();
     USBDeviceAttach();
 
-    for (int i = 0; remotes[i]; i++) {
+    for (int i=0; remotes[i]; i++) {
         remotes[i]->init(remotes[i]);
     }
 
@@ -57,6 +57,7 @@ int main(void) {
     commands cmd = =
     //remote* r, code, command
      */
+send_code(&pollin_rf_rc, STEST);
 
     while (1) {
 

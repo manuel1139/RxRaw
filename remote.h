@@ -19,6 +19,7 @@ enum fsm_state {
     header_b,
     first_edge,
     second_edge,
+    tail,
     done,
     not_me
 };
@@ -49,7 +50,7 @@ typedef struct  {
 typedef struct  {
     uint8_t word_cnt;
     uint8_t bit_cnt;
-    uint8_t edge_a_bit;
+    uint16_t edge_a_bit;
     uint16_t code_to_send;
 } tx_data;
 
@@ -62,6 +63,7 @@ struct remote {
     const uint16_t high_1;
     const uint16_t low_0;
     const uint16_t high_0;
+    const uint16_t tail;
     const uint16_t pre_code;
     const uint8_t bit_cnt;
     pInitFunc init;

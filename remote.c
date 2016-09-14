@@ -17,6 +17,7 @@ struct remote minfiniy_led = {
     0x029B, //b_1
     0x0394, //a_0
     0x0914, //b_0
+    0,      //tail
     0xFF08, //pre_code
     32,
     &init,
@@ -40,6 +41,7 @@ struct remote terratec_ir_rc = {
     0, //high_1
     0,
     0,
+    0,  //tail
     0x28D7, //pre_code
     32,
     &init,
@@ -56,6 +58,7 @@ const uint16_t pollin_rf_rc_codes[] = {
     S2_OFF,
     S3_ON,
     S3_OFF,
+    STEST,
 };
 
 struct remote pollin_rf_rc = {
@@ -67,6 +70,7 @@ struct remote pollin_rf_rc = {
     0x03C8, //low_0
     0x0829, //high_0
     0x000B, //pre_code
+    0xF000, //tail
     20, //bit count
     &init,
     0, //rx_func
@@ -85,6 +89,7 @@ struct remote yamaha_ir_rc = {
     0x3D8, //low_0
     0x940, //high_0
     0x0BCD, //pre_code
+    0x0,    //tail
     67, //bit count
     &init, //init_func
     &ir_rx_pulse_space, //rxFunc

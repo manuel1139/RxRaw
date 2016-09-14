@@ -34,6 +34,7 @@
 #define ALL_OFF 0x00E1
 #define DARK   0x001B
 #define LIGHT  0x000A
-    
+#define STEST 0x80AB
+
 #endif	/* REMOTE_KEYS_H */
 
