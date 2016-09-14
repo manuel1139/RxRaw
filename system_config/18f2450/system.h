@@ -36,9 +36,10 @@ read as ?0?.
 #define RF_OUT_TRIS TRISAbits.TRISA0
 #define RF_OUT LATAbits.LATA0
 
-char dummy;    
-#define LED1_TRIS dummy
-#define LED1 dummy
+
+//char dummy;    
+#define LED1_TRIS TRISAbits.TRISA2
+#define LED1 LATAbits.LATA2
     
 #define LED2_TRIS TRISAbits.TRISA1
 #define LED2 LATAbits.LATA1

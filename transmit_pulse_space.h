@@ -10,7 +10,7 @@
 
 struct remote;
 
-extern void tx_pulse_space(struct remote* r, uint16_t key);
+extern void tx_pulse_space(struct remote* r);
 
 #endif	/* TRANSMIT_PULSE_SPACE_H */
 

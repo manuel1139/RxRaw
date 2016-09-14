@@ -6,7 +6,7 @@
 //file globals
 char edges = 0;
 uint8_t edge_cnt = 0;
-#define MAX_EDGE 90
+#define MAX_EDGE 70
 uint16_t edge_times[MAX_EDGE];
 
 void rx_raw(uint16_t bit_time) {
@@ -22,3 +22,4 @@ void rx_raw_timeo() {
         edge_cnt = 0;
     }
 }
+

@@ -11,6 +11,7 @@
 void rf_tx_start();
 void ir_tx_stop();
 void TransmitISR();
+void send_code(struct remote* r, uint16_t code);
 
 #endif	/* TRANSMITTER_H */
 

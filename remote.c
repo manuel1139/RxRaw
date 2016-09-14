@@ -2,9 +2,34 @@
 
 void init(struct remote *r);
 
+#define MF_KEY1 0xDF20
+#define MF_KEY2 0xEF10
+
+const uint16_t minfiniy_led_codes[] = {
+    MF_KEY1, MF_KEY2
+};
+
+struct remote minfiniy_led = {
+    "Minfiny LED RGB 5050",
+    0x3504, //header_a
+    0x19CD, //header_b
+    0x0392, //a_1
+    0x029B, //b_1
+    0x0394, //a_0
+    0x0914, //b_0
+    0xFF08, //pre_code
+    32,
+    &init,
+    &ir_rx_pulse_space, //rx_func
+    0, //tx_func
+    &minfiniy_led_codes,
+    idle
+};
+
+
 const uint16_t terratec_ir_rc_codes[] = {
-    KEY_0, KEY_1, KEY_2, KEY_3, KEY_4, KEY_5, 
-    KEY_6, KEY_7, KEY_8, KEY_9 
+    KEY_0, KEY_1, KEY_2, KEY_3, KEY_4, KEY_5,
+    KEY_6, KEY_7, KEY_8, KEY_9
 };
 
 struct remote terratec_ir_rc = {
@@ -19,16 +44,15 @@ struct remote terratec_ir_rc = {
     32,
     &init,
     &ir_rx_pulse_space, //rx_func
-    0,  //tx_func
+    0, //tx_func
     &terratec_ir_rc_codes[0],
-    idle,
-
+    idle
 }; //codes
 
 const uint16_t pollin_rf_rc_codes[] = {
     S1_ON,
     S1_OFF,
-    S2_ON, 
+    S2_ON,
     S2_OFF,
 };
 
@@ -43,8 +67,8 @@ struct remote pollin_rf_rc = {
     0x000B, //pre_code
     20, //bit count
     &init,
-    0,      //rx_func
-    &tx_pulse_space,    //tx_func
+    0, //rx_func
+    &tx_pulse_space, //tx_func
     &pollin_rf_rc_codes[0], //codes
     idle
 };
@@ -60,31 +84,35 @@ struct remote yamaha_ir_rc = {
     0x940, //high_0
     0x0BCD, //pre_code
     67, //bit count
-    &init,  //init_func
-    &ir_rx_pulse_space,  //rxFunc
+    &init, //init_func
+    &ir_rx_pulse_space, //rxFunc
     0, //tx_func
     0, //codes
     idle
 };
 
 
-struct remote *remotes[] = { 
-    &terratec_ir_rc, 
+struct remote *remotes[] = {
+    &terratec_ir_rc,
     &yamaha_ir_rc,
     &pollin_rf_rc,
+    &minfiniy_led,
     0
-            //{}
+    //{}
 };
 
-void init(struct remote *r){
+void init(struct remote *r) {
+    r->state = idle;
+
     r->rx_data.edge_a = 0;
     r->rx_data.word_cnt = 0;
     r->rx_data.bit_cnt = 0;
-    r->rx_data.word[0] = 0;    //todo: allow for other size?  
-    r->rx_data.word[1] = 0;    //todo: allow for other size?  
+    r->rx_data.word[0] = 0; //todo: allow for other size?  
+    r->rx_data.word[1] = 0; //todo: allow for other size?  
 
     r->tx_data.word_cnt = 2;
     r->tx_data.bit_cnt = r->bit_cnt;
     r->tx_data.edge_a_bit = 0;
+    r->tx_data.code_to_send = 0;
 }
 

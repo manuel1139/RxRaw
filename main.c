@@ -1,7 +1,6 @@
 #include <xc.h>
 #include <stdbool.h>       /* For true/false definition */
 #include <stdint.h>        /* For uint8_t definition */
-#include <stdio.h>
 
 #include "system.h"
 
@@ -13,7 +12,6 @@
 #include "receiver.h"
 #include "transmitter.h"
 #include "remote.h"
-
 
 /*
 void putch(unsigned char data) {
@@ -37,19 +35,43 @@ int main(void) {
     USBDeviceInit();
     USBDeviceAttach();
 
+    for (int i=0; remotes[i]; i++) {
+        remotes[i]->init(remotes[i]);
+    }
 
-    struct remote *r = remotes[0];
-    r->init(r);
-//ir_rx_init...    
-    ir_rx_start();
-    
+    ir_rx_start();    
     rf_tx_start();
-    pollin_rf_rc.tx_func(&pollin_rf_rc, S1_ON);
+/*
+typedef struct {
+    const char *name;
+    const uint8_t type;
+    const uint8_t val;
+} stateful_dev;
+
+typedef struct{
+    char *remote;
     
-    while (1) {
+};
+
+stateful_dev sfd = { "Wohnzimmer Licht", 0, 0 };
+commands cmd = =
+//remote* r, code, command
+*/
+    while (1) { 
+        
+        if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[0]) {
+                send_code(&pollin_rf_rc, S2_ON);
+        }
+        if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[1]) {
+                send_code(&pollin_rf_rc, S2_OFF);
+        }
+
+                minfiniy_led.rx_data.code_found = 0; 
+
+        
         //Non USB tasks
-        LED1 = ~IR_RCV;
-        LED2 = RF_OUT;
+        //LED1 = ~IR_RCV;
+        //LED2 = RF_OUT;
                    
         if (USBGetDeviceState() < CONFIGURED_STATE) {
             /* Jump back to the top of the while loop. */
@@ -62,6 +84,7 @@ int main(void) {
         }
         //Application specific tasks
         APP_DeviceCustomHIDTasks();
+    
     }
 }
 
