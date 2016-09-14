@@ -61,8 +61,12 @@ commands cmd = =
         
         if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[0]) {
                 send_code(&pollin_rf_rc, S2_ON);
+                send_code(&pollin_rf_rc, S2_ON);
+                send_code(&pollin_rf_rc, S2_ON);
         }
         if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[1]) {
+                send_code(&pollin_rf_rc, S2_OFF);
+                send_code(&pollin_rf_rc, S2_OFF);
                 send_code(&pollin_rf_rc, S2_OFF);
         }
 

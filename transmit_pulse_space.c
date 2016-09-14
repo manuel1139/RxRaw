@@ -9,6 +9,7 @@
 void tx_pulse_space(struct remote* r) {
     switch (r->state) {
         case idle: //not needed in tx
+            r->init(r);
             r->state = header_a;
         case header_a:
             if (r->hdr_time_a != 0) {
@@ -50,7 +51,8 @@ void tx_pulse_space(struct remote* r) {
             break;
         case done:
             RF_OUT = 0; //last edge must be  zero
-            r->init(r);
+            WriteTxTimer(0x0F00);
+            //r->init(r);
             break;
         default:
             break;
