@@ -68,10 +68,10 @@ struct remote {
     pRxFunc rx_func;
     pTxFunc tx_func;
     const uint16_t *keys;
-    enum fsm_state state;
+    volatile enum fsm_state state;
     
-    rx_data rx_data;
-    tx_data tx_data;
+    volatile rx_data rx_data;
+    volatile tx_data tx_data;
 };
 
 struct remote terratec_ir_rc;

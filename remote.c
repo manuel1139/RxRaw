@@ -51,9 +51,11 @@ struct remote terratec_ir_rc = {
 
 const uint16_t pollin_rf_rc_codes[] = {
     S1_ON,
-    S1_OFF,
+//    S1_OFF,
     S2_ON,
     S2_OFF,
+    S3_ON,
+    S3_OFF,
 };
 
 struct remote pollin_rf_rc = {

@@ -35,44 +35,47 @@ int main(void) {
     USBDeviceInit();
     USBDeviceAttach();
 
-    for (int i=0; remotes[i]; i++) {
+    for (int i = 0; remotes[i]; i++) {
         remotes[i]->init(remotes[i]);
     }
 
-    ir_rx_start();    
+    ir_rx_start();
     rf_tx_start();
-/*
-typedef struct {
-    const char *name;
-    const uint8_t type;
-    const uint8_t val;
-} stateful_dev;
+    /*
+    typedef struct {
+        const char *name;
+        const uint8_t type;
+        const uint8_t val;
+    } stateful_dev;
 
-typedef struct{
-    char *remote;
+    typedef struct{
+        char *remote;
     
-};
+    };
 
-stateful_dev sfd = { "Wohnzimmer Licht", 0, 0 };
-commands cmd = =
-//remote* r, code, command
-*/
-    while (1) { 
-        
+    stateful_dev sfd = { "Wohnzimmer Licht", 0, 0 };
+    commands cmd = =
+    //remote* r, code, command
+     */
+
+    while (1) {
+
         if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[0]) {
-                send_code(&pollin_rf_rc, S2_ON);
+            send_code(&pollin_rf_rc, S3_ON);
+            minfiniy_led.rx_data.code_found = 0;
         }
         if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[1]) {
-                send_code(&pollin_rf_rc, S2_OFF);
+            send_code(&pollin_rf_rc, S3_OFF);
+            minfiniy_led.rx_data.code_found = 0;
         }
 
-                minfiniy_led.rx_data.code_found = 0; 
 
-        
+
+
         //Non USB tasks
         //LED1 = ~IR_RCV;
         //LED2 = RF_OUT;
-                   
+
         if (USBGetDeviceState() < CONFIGURED_STATE) {
             /* Jump back to the top of the while loop. */
             continue;
@@ -84,31 +87,29 @@ commands cmd = =
         }
         //Application specific tasks
         APP_DeviceCustomHIDTasks();
-    
+
     }
 }
 
-bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size)
-{
-    switch((int)event)
-    {
+bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size) {
+    switch ((int) event) {
         case EVENT_TRANSFER:
             break;
 
         case EVENT_SOF:
             /* We are using the SOF as a timer to time the LED indicator.  Call
              * the LED update function here. */
-//            APP_LEDUpdateUSBStatus();
+            //            APP_LEDUpdateUSBStatus();
             break;
 
         case EVENT_SUSPEND:
             /* Update the LED status for the suspend event. */
-//            APP_LEDUpdateUSBStatus();
+            //            APP_LEDUpdateUSBStatus();
             break;
 
         case EVENT_RESUME:
             /* Update the LED status for the resume event. */
-//            APP_LEDUpdateUSBStatus();
+            //            APP_LEDUpdateUSBStatus();
             break;
 
         case EVENT_CONFIGURED:
@@ -139,12 +140,12 @@ bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size
 }
 
 void high_priority interrupt high_isr(void) {
-        
+
     USBDeviceTasks();
-        
+
     ReceiveISR();
-    
+
     TransmitISR();
-    
+
 }
 

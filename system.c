@@ -24,5 +24,6 @@ void SYSTEM_Initialize(void)
     LED1_TRIS = OUTPUT_PIN;
     LED2_TRIS = OUTPUT_PIN;
   
+    DEAD_PIN_TRIS = INPUT_PIN;
 }
 

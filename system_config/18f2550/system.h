@@ -30,6 +30,9 @@ read as ?0?.
  */    
 //#define IR_RCV_TRIS TRISCbits.TRISC2 see above timer1    
 #define IR_RCV      PORTCbits.CCP1
+
+#define DEAD_PIN_TRIS    LATCbits.LC1
+#define DEAD_PIN    PORTCbits.RC1
         
 #define RF_OUT_TRIS TRISAbits.TRISA5
 #define RF_OUT LATAbits.LATA5
