@@ -66,7 +66,8 @@ struct remote {
     const uint16_t tail;
     const uint16_t pre_code;
     const uint8_t bit_cnt;
-    pInitFunc init;
+    pInitFunc init_rx;
+    pInitFunc init_tx;
     pRxFunc rx_func;
     pTxFunc tx_func;
     const uint16_t *keys;

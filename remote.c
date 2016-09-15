@@ -1,6 +1,7 @@
 #include "remote.h"
 
-void init(struct remote *r);
+void init_rx(struct remote *r);
+void init_tx(struct remote *r);
 
 #define MF_KEY1 0xDF20
 #define MF_KEY2 0xEF10
@@ -20,7 +21,8 @@ struct remote minfiniy_led = {
     0,      //tail
     0xFF08, //pre_code
     32,
-    &init,
+    &init_rx,
+    &init_tx,
     &ir_rx_pulse_space, //rx_func
     0, //tx_func
     &minfiniy_led_codes,
@@ -44,7 +46,8 @@ struct remote terratec_ir_rc = {
     0,  //tail
     0x28D7, //pre_code
     32,
-    &init,
+    &init_rx,
+    &init_tx,
     &ir_rx_pulse_space, //rx_func
     0, //tx_func
     &terratec_ir_rc_codes[0],
@@ -61,6 +64,7 @@ const uint16_t pollin_rf_rc_codes[] = {
     STEST,
 };
 
+
 struct remote pollin_rf_rc = {
     "Pollin",
     0x0, //header_a
@@ -69,10 +73,11 @@ struct remote pollin_rf_rc = {
     0x07B2, //high_1
     0x03C8, //low_0
     0x0829, //high_0
-    0x000B, //pre_code
     0xF000, //tail
+    0x000B, //pre_code
     20, //bit count
-    &init,
+    &init_rx,
+    &init_tx,
     0, //rx_func
     &tx_pulse_space, //tx_func
     &pollin_rf_rc_codes[0], //codes
@@ -88,10 +93,11 @@ struct remote yamaha_ir_rc = {
     0x2A2, //high_1
     0x3D8, //low_0
     0x940, //high_0
+    0x0,    //tail    
     0x0BCD, //pre_code
-    0x0,    //tail
     67, //bit count
-    &init, //init_func
+    &init_rx,
+    &init_tx,
     &ir_rx_pulse_space, //rxFunc
     0, //tx_func
     0, //codes

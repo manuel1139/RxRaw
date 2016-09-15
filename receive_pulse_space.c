@@ -35,28 +35,28 @@ bool chk_hdr_bounds(uint16_t remote_time, uint16_t bit_time) {
 }
 
 void ir_rx_pulse_space(struct remote* r, uint16_t bit_time) {
-    switch (r->state) {
+    switch (r->rx_state) {
         case idle: //ignore first edge
-            r->state = header_a;
+            r->rx_state = header_a;
             break;
         case header_a:
             //allow 1/16 bit time as difference
-            chk_hdr_bounds(r->hdr_time_a, bit_time) ? r->state = header_b :
-                    r->state = not_me;
+            chk_hdr_bounds(r->hdr_time_a, bit_time) ? r->rx_state = header_b :
+                    r->rx_state = not_me;
             break;
         case header_b:
-            chk_hdr_bounds(r->hdr_time_b, bit_time) ? r->state = first_edge :
-                    r->state = not_me;
+            chk_hdr_bounds(r->hdr_time_b, bit_time) ? r->rx_state = first_edge :
+                    r->rx_state = not_me;
             break;
         case first_edge:
             r->rx_data.edge_a = bit_time;
-            r->state = second_edge;
+            r->rx_state = second_edge;
             break;
         case second_edge:
             if (r->rx_data.bit_cnt < r->bit_cnt) {
                 chk_bit_bounds(r, r->rx_data.edge_a, bit_time) ?
-                        r->state = first_edge : r->state = not_me;
-                if (r->state == not_me) break;
+                        r->rx_state = first_edge : r->rx_state = not_me;
+                if (r->rx_state == not_me) break;
 
                 r->rx_data.word_cnt = r->rx_data.bit_cnt / 16;
 

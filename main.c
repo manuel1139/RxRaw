@@ -35,8 +35,9 @@ int main(void) {
     USBDeviceInit();
     USBDeviceAttach();
 
-    for (int i=0; remotes[i]; i++) {
-        remotes[i]->init(remotes[i]);
+    for (int i = 0; remotes[i]; i++) {
+        remotes[i]->init_rx(remotes[i]);
+        remotes[i]->init_tx(remotes[i]);
     }
 
     ir_rx_start();
@@ -57,21 +58,22 @@ int main(void) {
     commands cmd = =
     //remote* r, code, command
      */
-send_code(&pollin_rf_rc, STEST);
-
+     
     while (1) {
-
+        static uint8_t x=0;
+        
+send_code(&pollin_rf_rc, S3_ON);
         if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[0]) {
-            send_code(&pollin_rf_rc, S2_ON);
-            send_code(&pollin_rf_rc, S2_ON);
-            send_code(&pollin_rf_rc, S2_ON);
+            send_code(&pollin_rf_rc, S3_ON);
+            //  send_code(&pollin_rf_rc, S3_ON);
+            // send_code(&pollin_rf_rc, S3_ON);
 
             minfiniy_led.rx_data.code_found = 0;
-        }
+        } else
         if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[1]) {
-            send_code(&pollin_rf_rc, S2_OFF);
-            send_code(&pollin_rf_rc, S2_OFF);
-            send_code(&pollin_rf_rc, S2_OFF);
+            send_code(&pollin_rf_rc, S3_OFF);
+            //  send_code(&pollin_rf_rc, S3_OFF);
+            //  send_code(&pollin_rf_rc, S3_OFF);
 
             minfiniy_led.rx_data.code_found = 0;
 

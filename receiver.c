@@ -20,7 +20,7 @@ const remote *Remotes[] = {
 void ReceiveISR() {
     if (PIR1bits.CCP1IF) {
         //inverts edge detection 
-        CCP1CONbits.CCP1M0 = ~CCP1CONbits.CCP1M0; //invert edge detection
+        CCP1CONbits.CCP1M0 = CCP1CONbits.CCP1M0 ^ 1; //invert edge detection
  
         //CCPR1H = TMR1H;  //debug only
         uint16_t cval = ReadRxCapture();

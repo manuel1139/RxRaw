@@ -27,7 +27,7 @@
 #define S2_ON  0x0093
 #define S2_OFF 0x0082    
 #define S3_ON  0x0050
-#define S3_OFF 0x8041    
+#define S3_OFF 0x0041    
 #define S4_ON  0x00D2
 #define S4_OFF 0x00C3    
 #define ALL_ON 0x00F0
