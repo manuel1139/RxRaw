@@ -70,7 +70,8 @@ struct remote {
     pRxFunc rx_func;
     pTxFunc tx_func;
     const uint16_t *keys;
-    volatile enum fsm_state state;
+    volatile enum fsm_state rx_state;
+    volatile enum fsm_state tx_state;
     
     volatile rx_data rx_data;
     volatile tx_data tx_data;

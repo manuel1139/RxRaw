@@ -98,28 +98,38 @@ struct remote yamaha_ir_rc = {
     idle
 };
 
-
-struct remote *remotes[] = {
+enum e_remotes{
+    TERRATEC = 0,
+    YAMAHA,
+    POLLIN,
+    MINFINIY,
+    REMOTES_MAX
+};
+struct remote *remotes[REMOTES_MAX] = {
     &terratec_ir_rc,
     &yamaha_ir_rc,
     &pollin_rf_rc,
     &minfiniy_led,
+&minfiniy_led,            
     0
     //{}
 };
 
-void init(struct remote *r) {
-    r->state = idle;
+// remotes[TERRATEC], key ->  function
 
+void init_rx(struct remote *r) {
+    r->rx_state = idle;  
     r->rx_data.edge_a = 0;
     r->rx_data.word_cnt = 0;
     r->rx_data.bit_cnt = 0;
-    r->rx_data.word[0] = 0; //todo: allow for other size?  
-    r->rx_data.word[1] = 0; //todo: allow for other size?  
+    r->rx_data.word[0] = 0; //todo:
+    r->rx_data.word[1] = 0; 
+}
 
+void init_tx(struct remote *r) {
+    r->tx_state = idle;  
     r->tx_data.word_cnt = 2;
     r->tx_data.bit_cnt = r->bit_cnt;
     r->tx_data.edge_a_bit = 0;
-    r->tx_data.code_to_send = 0;
+    r->tx_data.code_to_send = 0;   
 }
-

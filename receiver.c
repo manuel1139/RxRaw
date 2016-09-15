@@ -37,7 +37,7 @@ void ReceiveISR() {
     if (PIR1bits.TMR1IF) {
         rx_raw_timeo();
         for (int i = 0; remotes[i]; i++) {
-            remotes[i]->init(remotes[i]);
+            remotes[i]->init_rx(remotes[i]);
         }
         CCP1CONbits.CCP1M0 = 0; //capture every falling edge
         PIR1bits.TMR1IF = 0;
