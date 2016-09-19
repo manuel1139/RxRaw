@@ -1,3 +1,16 @@
+/*
+ * 
+ * used peripherals
+ * 
+ * CCP1 with 
+ * TMR1 for receiving IR data
+ * 
+ * TMR0 for transmitting RF data 
+ * 
+ * TMR2 for PSWM IR Transmitter @ 38khz TMR0
+
+
+
 #include <xc.h>
 #include <stdbool.h>       /* For true/false definition */
 #include <stdint.h>        /* For uint8_t definition */
@@ -12,7 +25,7 @@
 #include "receiver.h"
 #include "transmitter.h"
 #include "remote.h"
-
+#include "capture.h"
 /*
 void putch(unsigned char data) {
     while (!PIR1bits.TXIF) // wait until the transmitter is ready
@@ -30,6 +43,7 @@ int main(void) {
 
     //init_uart();
     //rintf("starting\n");
+    
     SYSTEM_Initialize();
 
     USBDeviceInit();
@@ -42,6 +56,10 @@ int main(void) {
 
     ir_rx_start();
     rf_tx_start();
+#if defined(__18F2550)
+    ir_tx_start();
+#endif
+    
     /*
     typedef struct {
         const char *name;
@@ -58,33 +76,33 @@ int main(void) {
     commands cmd = =
     //remote* r, code, command
      */
-     
+
+           // send_code(&yamaha_ir_rc, Y_VOL_UP);
     while (1) {
-        static uint8_t x=0;
         
-send_code(&pollin_rf_rc, S3_ON);
+                for (long i=0; i<1200000; i++);
+                send_code(&yamaha_ir_rc, Y_VOL_UP); 
         if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[0]) {
-            send_code(&pollin_rf_rc, S3_ON);
+ //           send_code(&pollin_rf_rc, S3_ON);
+
+            send_code(&yamaha_ir_rc, Y_VOL_UP);
+
             //  send_code(&pollin_rf_rc, S3_ON);
             // send_code(&pollin_rf_rc, S3_ON);
 
             minfiniy_led.rx_data.code_found = 0;
         } else
-        if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[1]) {
-            send_code(&pollin_rf_rc, S3_OFF);
+            if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[1]) {
+   //         send_code(&pollin_rf_rc, S3_OFF);
+
+            send_code(&yamaha_ir_rc, Y_VOL_DOWN);
+
             //  send_code(&pollin_rf_rc, S3_OFF);
             //  send_code(&pollin_rf_rc, S3_OFF);
 
             minfiniy_led.rx_data.code_found = 0;
 
         }
-
-
-
-
-        //Non USB tasks
-        //LED1 = ~IR_RCV;
-        //LED2 = RF_OUT;
 
         if (USBGetDeviceState() < CONFIGURED_STATE) {
             /* Jump back to the top of the while loop. */

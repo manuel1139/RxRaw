@@ -27,12 +27,16 @@ enum fsm_state {
 struct remote;
 struct remote *remotes[];
 
+struct ir_code {
+    uint16_t code;
+};
+
 typedef void (*pRxFunc)(struct remote*, uint16_t);
 typedef void (*pTxFunc)(struct remote*);
 
 typedef void (*pInitFunc)(struct remote*);
 
-extern void ir_rx(struct remote*, uint16_t);
+//extern void ir_rx_pulse_space(struct remote*, struct ir_code); todo
 extern void ir_rx_pulse_space(struct remote*, uint16_t);
 
 extern void tx_pulse_space(struct remote*);
@@ -59,10 +63,10 @@ struct remote {
     const char* name;
     const uint16_t hdr_time_a;
     const uint16_t hdr_time_b;
-    const uint16_t low_1;
-    const uint16_t high_1;
-    const uint16_t low_0;
-    const uint16_t high_0;
+    const uint16_t a_1;
+    const uint16_t b_1;
+    const uint16_t a_0;
+    const uint16_t b_0;
     const uint16_t tail;
     const uint16_t pre_code;
     const uint8_t bit_cnt;

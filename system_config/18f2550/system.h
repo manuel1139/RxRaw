@@ -31,17 +31,21 @@ read as ?0?.
 //#define IR_RCV_TRIS TRISCbits.TRISC2 see above timer1    
 #define IR_RCV      PORTCbits.CCP1
 
-#define DEAD_PIN_TRIS    LATCbits.LC1
+#define DEAD_PIN_TRIS    TRISCbits.TRISC1
 #define DEAD_PIN    PORTCbits.RC1
         
 #define RF_OUT_TRIS TRISAbits.TRISA5
 #define RF_OUT LATAbits.LATA5
-
-#define LED1 LATBbits.LB4
-#define LED1_TRIS TRISBbits.RB5
     
-#define LED2 LATBbits.LB4
+#define IR_OUT_TRIS TRISBbits.TRISB3
+#define IR_OUT LATBbits.RB3
+
+#define LED1_TRIS TRISBbits.RB5
+#define LED1 LATBbits.LB5
+
 #define LED2_TRIS TRISBbits.RB4
+#define LED2 LATBbits.LB4
+
     
     
     void SYSTEM_Initialize(void);

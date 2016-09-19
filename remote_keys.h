@@ -36,5 +36,10 @@
 #define LIGHT  0x000A
 #define STEST 0x80AB
 
+
+#define Y_VOL_UP 0xA758
+#define Y_VOL_DOWN 0x27D8
+
+
 #endif	/* REMOTE_KEYS_H */
 

@@ -18,6 +18,7 @@ void SYSTEM_Initialize(void)
     INTCONbits.GIEL = 1;
     RCONbits.IPEN = 1; //Interrupt priority
     
+    IR_OUT_TRIS = OUTPUT_PIN;
         
     RF_OUT_TRIS = OUTPUT_PIN;
 
@@ -25,5 +26,7 @@ void SYSTEM_Initialize(void)
     LED2_TRIS = OUTPUT_PIN;
   
     DEAD_PIN_TRIS = INPUT_PIN;
+    
+    
 }
 

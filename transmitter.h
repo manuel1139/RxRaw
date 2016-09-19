@@ -10,6 +10,9 @@
 
 void rf_tx_start();
 void ir_tx_stop();
+
+void ir_tx_start();
+
 void TransmitISR();
 void send_code(struct remote* r, uint16_t code);
 

@@ -32,9 +32,10 @@ uint16_t ReadRxCapture() {
     val = CCPR1;
     return val;
 }
+#define StopRxCapture() CloseRxCapture()
 
 void CloseRxCapture() {
-
+    CCP1CON = 0x0;
 }
 
 

@@ -12,10 +12,10 @@ bool chk_bit_bounds(struct remote* r, uint16_t a, uint16_t b) {
     diff_a = a >> 2;
     diff_b = b >> 2;
 
-    a1 = (r->low_1 < a + diff_a) && (r->low_1 > a - diff_a); //first edge for 1
-    b1 = (r->high_1 < b + diff_b && r->high_1 > b - diff_b); //second edge for 1
-    a0 = (r->low_0 < a + diff_a && r->low_0 > a - diff_a); //first edge for 0            
-    b0 = (r->high_0 < b + diff_b && r->high_0 > b - diff_b); //secode edge for 0
+    a1 = (r->a_1 < a + diff_a) && (r->a_1 > a - diff_a); //first edge for 1
+    b1 = (r->b_1 < b + diff_b && r->b_1 > b - diff_b); //second edge for 1
+    a0 = (r->a_0 < a + diff_a && r->a_0 > a - diff_a); //first edge for 0            
+    b0 = (r->b_0 < b + diff_b && r->b_0 > b - diff_b); //secode edge for 0
 
     x = (a1 && b1) || (a0 && b0); //todo: check for burst
     if (!x) {

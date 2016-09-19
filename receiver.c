@@ -8,6 +8,7 @@
 
 
 #include "remote.h"
+#include "system.h"
 
 /*
 const remote *Remotes[] = {
@@ -29,7 +30,7 @@ void ReceiveISR() {
         //for (r; r != 0; r++); // r->pRcvFunc(r, cval);
         //        terratec_ir_rc.rx_func(&terratec_ir_rc, cval);
         //        yamaha_ir_rc.rx_func(&yamaha_ir_rc, cval);
-        minfiniy_led.rx_func(&minfiniy_led, cval);
+        minfiniy_led.rx_func(&minfiniy_led, cval);  //todo:
         WriteRxTimer(0);
         PIR1bits.CCP1IF = 0;
     }
@@ -41,6 +42,7 @@ void ReceiveISR() {
         }
         CCP1CONbits.CCP1M0 = 0; //capture every falling edge
         PIR1bits.TMR1IF = 0;
+
     }
 }
 
