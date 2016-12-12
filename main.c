@@ -26,6 +26,7 @@
 #include "transmitter.h"
 #include "remote.h"
 #include "capture.h"
+
 /*
 void putch(unsigned char data) {
     while (!PIR1bits.TXIF) // wait until the transmitter is ready
@@ -43,11 +44,28 @@ int main(void) {
 
     //init_uart();
     //rintf("starting\n");
-    
+
     SYSTEM_Initialize();
 
     USBDeviceInit();
     USBDeviceAttach();
+
+    enum e_remotes {
+        TERRATEC = 0,
+        YAMAHA,
+        POLLIN,
+        MINFINIY,
+        REMOTES_MAX
+    };
+    struct remote * remotes[REMOTES_MAX] = {
+        &terratec_ir_rc,
+        &yamaha_ir_rc,
+        &pollin_rf_rc,
+        &minfiniy_led,
+        &minfiniy_led,
+        0
+        //{}
+    };
 
     for (int i = 0; remotes[i]; i++) {
         remotes[i]->init_rx(remotes[i]);
@@ -59,7 +77,7 @@ int main(void) {
 #if defined(__18F2550)
     ir_tx_start();
 #endif
-    
+
     /*
     typedef struct {
         const char *name;
@@ -77,13 +95,13 @@ int main(void) {
     //remote* r, code, command
      */
 
-           // send_code(&yamaha_ir_rc, Y_VOL_UP);
+    // send_code(&yamaha_ir_rc, Y_VOL_UP);
     while (1) {
-        
-                for (long i=0; i<1200000; i++);
-                send_code(&yamaha_ir_rc, Y_VOL_UP); 
+
+        for (long i = 0; i < 1200000; i++);
+        send_code(&yamaha_ir_rc, Y_VOL_UP);
         if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[0]) {
- //           send_code(&pollin_rf_rc, S3_ON);
+            //           send_code(&pollin_rf_rc, S3_ON);
 
             send_code(&yamaha_ir_rc, Y_VOL_UP);
 
@@ -93,7 +111,7 @@ int main(void) {
             minfiniy_led.rx_data.code_found = 0;
         } else
             if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[1]) {
-   //         send_code(&pollin_rf_rc, S3_OFF);
+            //         send_code(&pollin_rf_rc, S3_OFF);
 
             send_code(&yamaha_ir_rc, Y_VOL_DOWN);
 

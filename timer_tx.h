@@ -8,12 +8,8 @@
 #include <xc.h>
 #include <stdint.h>
 
-#ifndef TIMER_H
-#define	TIMER_H
-
-void OpenRxTimer();
-uint16_t ReadRxTimer();
-void WriteRxTimer(uint16_t val);
+#ifndef TIMER_TX_H
+#define	TIMER_TX_H
 
 void OpenTxTimer();
 void WriteTxTimer(uint16_t val);

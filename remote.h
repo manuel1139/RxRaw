@@ -25,7 +25,7 @@ enum fsm_state {
 };
 
 struct remote;
-struct remote *remotes[];
+extern struct remote *remotes[];
 
 struct ir_code {
     uint16_t code;
@@ -41,23 +41,20 @@ extern void ir_rx_pulse_space(struct remote*, uint16_t);
 
 extern void tx_pulse_space(struct remote*);
 
-
-typedef struct  {
+typedef struct {
     uint16_t edge_a;
     uint8_t word_cnt;
     uint8_t bit_cnt;
-    uint16_t word[2];    //todo: allow for other size?  
+    uint16_t word[2]; //todo: allow for other size?  
     uint16_t code_found;
 } rx_data;
 
-
-typedef struct  {
+typedef struct {
     uint8_t word_cnt;
     uint8_t bit_cnt;
     uint16_t edge_a_bit;
     uint16_t code_to_send;
 } tx_data;
-
 
 struct remote {
     const char* name;
@@ -77,14 +74,13 @@ struct remote {
     const uint16_t *keys;
     volatile enum fsm_state rx_state;
     volatile enum fsm_state tx_state;
-    
+
     volatile rx_data rx_data;
     volatile tx_data tx_data;
 };
 
-struct remote terratec_ir_rc;
-struct remote yamaha_ir_rc;
-struct remote pollin_rf_rc;
-struct remote minfiniy_led;
+
+void init_rx(struct remote *r);
+void init_tx(struct remote *r);
 
 #endif	/* REMOTE_H */

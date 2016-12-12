@@ -29,7 +29,7 @@
  IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL OR
  CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
 
-********************************************************************
+ ********************************************************************
  File Description:
 
  Change History:
@@ -50,12 +50,12 @@
 
 /** DEFINITIONS ****************************************************/
 #define USB_EP0_BUFF_SIZE		8	// Valid Options: 8, 16, 32, or 64 bytes.
-								// Using larger options take more SRAM, but
-								// does not provide much advantage in most types
-								// of applications.  Exceptions to this, are applications
-								// that use EP0 IN or OUT for sending large amounts of
-								// application related data.
-									
+// Using larger options take more SRAM, but
+// does not provide much advantage in most types
+// of applications.  Exceptions to this, are applications
+// that use EP0 IN or OUT for sending large amounts of
+// application related data.
+
 #define USB_MAX_NUM_INT     	1   //Set this number to match the maximum interface number used in the descriptors for this firmware project
 #define USB_MAX_EP_NUMBER	    1   //Set this number to match the maximum endpoint number used in the descriptors for this firmware project
 
@@ -154,8 +154,8 @@
 //parameter is not relevant.
 
 #define USB_STATUS_STAGE_TIMEOUT     (uint8_t)45   //Approximate timeout in milliseconds, except when
-                                                //USB_POLLING mode is used, and USBDeviceTasks() is called at < 1kHz
-                                                //In this special case, the timeout becomes approximately:
+//USB_POLLING mode is used, and USBDeviceTasks() is called at < 1kHz
+//In this special case, the timeout becomes approximately:
 //Timeout(in milliseconds) = ((1000 * (USB_STATUS_STAGE_TIMEOUT - 1)) / (USBDeviceTasks() polling frequency in Hz))
 //------------------------------------------------------------------------------------------------------------------
 

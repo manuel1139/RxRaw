@@ -9,6 +9,7 @@
 #include <xc.h>
 #include <stdint.h>
 #if defined(__18F2550)
+
 void OpenPWM() {
     PR2 = 0b01001110;
     T2CON = 0b00000101;

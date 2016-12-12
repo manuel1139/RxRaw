@@ -61,13 +61,15 @@ void ir_rx_pulse_space(struct remote* r, uint16_t bit_time) {
                 r->rx_data.word_cnt = r->rx_data.bit_cnt / 16;
 
                 r->rx_data.word[r->rx_data.word_cnt] <<= 1;
+                //TODO:: might NOT alwas work!
                 if (r->rx_data.edge_a > bit_time) {
+
                     r->rx_data.word[r->rx_data.word_cnt] |= 1;
                 }
                 r->rx_data.bit_cnt++;
             } else {
                 r->rx_data.code_found = r->rx_data.word[1];
-//                r->init(r);  //? wait  for next timeout
+                //                r->init(r);  //? wait  for next timeout
             }
             break;
         case not_me:
