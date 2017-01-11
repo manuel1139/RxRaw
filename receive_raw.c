@@ -1,6 +1,6 @@
 #include <xc.h>
 
-#include "timer.h"
+#include "timer_rx.h"
 #include "capture.h"
 
 //file globals

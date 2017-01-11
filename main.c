@@ -39,41 +39,29 @@ void init_uart(void) {
     RCSTAbits.SPEN = 1; // enable serial port
 }
  */
+    extern struct remote terratec_ir_rc;
+
+    struct remote * remotes[] = {
+        &terratec_ir_rc,
+        0
+    };
+
 
 int main(void) {
+
+    SYSTEM_Initialize();
 
     //init_uart();
     //rintf("starting\n");
 
-    SYSTEM_Initialize();
-
     USBDeviceInit();
     USBDeviceAttach();
 
-    enum e_remotes {
-        TERRATEC = 0,
-        YAMAHA,
-        POLLIN,
-        MINFINIY,
-        REMOTES_MAX
-    };
-    struct remote * remotes[REMOTES_MAX] = {
-        &terratec_ir_rc,
-        &yamaha_ir_rc,
-        &pollin_rf_rc,
-        &minfiniy_led,
-        &minfiniy_led,
-        0
-        //{}
-    };
-
     for (int i = 0; remotes[i]; i++) {
         remotes[i]->init_rx(remotes[i]);
-        remotes[i]->init_tx(remotes[i]);
     }
-
     ir_rx_start();
-    rf_tx_start();
+
 #if defined(__18F2550)
     ir_tx_start();
 #endif
@@ -96,8 +84,10 @@ int main(void) {
      */
 
     // send_code(&yamaha_ir_rc, Y_VOL_UP);
-    while (1) {
 
+
+    while (1) {
+/*
         for (long i = 0; i < 1200000; i++);
         send_code(&yamaha_ir_rc, Y_VOL_UP);
         if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[0]) {
@@ -121,6 +111,7 @@ int main(void) {
             minfiniy_led.rx_data.code_found = 0;
 
         }
+        */
 
         if (USBGetDeviceState() < CONFIGURED_STATE) {
             /* Jump back to the top of the while loop. */
@@ -133,7 +124,6 @@ int main(void) {
         }
         //Application specific tasks
         APP_DeviceCustomHIDTasks();
-
     }
 }
 

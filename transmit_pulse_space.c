@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 #include "remote.h"
-#include "timer.h"
+#include "timer_tx.h"
 #include "system.h"
 #include "pwm.h"
 

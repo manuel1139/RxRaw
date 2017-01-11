@@ -9,7 +9,7 @@
 #include "receive_raw.h"
 
 #include "capture.h"
-#include "timer.h"
+#include "timer_tx.h"
 #include "pwm.h"
 
 #include "remote.h"

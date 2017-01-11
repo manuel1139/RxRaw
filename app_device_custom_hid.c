@@ -84,7 +84,6 @@ void APP_DeviceCustomHIDTasks() {
     uint16_t code;
     //Check if we have received an OUT data packet from the host
 
-
     if (HIDRxHandleBusy(USBOutHandle) == false) {
         //We just received a packet of data from the USB host.
         //Check the first uint8_t of the packet to see what command the host
@@ -143,8 +142,4 @@ void APP_DeviceCustomHIDTasks() {
     }
 
     //see if we received new hid control message 
-
-
-
-
 }
