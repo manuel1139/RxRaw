@@ -5,6 +5,7 @@ void init_rx(struct remote *r) {
     r->rx_data.edge_a = 0;
     r->rx_data.word_cnt = 0;
     r->rx_data.bit_cnt = 0;
+    r->rx_data.code_found = 0;
     r->rx_data.word[0] = 0; //todo:
     r->rx_data.word[1] = 0;
 }

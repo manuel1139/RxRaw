@@ -17,9 +17,11 @@ void OpenRxTimer() {
     T1CON = 0b10110001;
     TMR1H = 0;
     TMR1L = 0;
+    T3CONbits.T3CCP2 = 0;
+    T3CONbits.T3CCP1 = 0;
     PIR1bits.TMR1IF = 0;
     PIE1bits.TMR1IE = 1;
-
+    
 }
 
 uint16_t ReadRxTimer() {

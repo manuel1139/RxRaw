@@ -68,6 +68,7 @@ void ir_rx_pulse_space(struct remote* r, uint16_t bit_time) {
                 }
                 r->rx_data.bit_cnt++;
             } else {
+                //todo: check bit count
                 r->rx_data.code_found = r->rx_data.word[1];
                 //                r->init(r);  //? wait  for next timeout
             }

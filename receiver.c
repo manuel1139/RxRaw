@@ -9,7 +9,8 @@
 #include "remote.h"
 #include "system.h"
 
-extern struct remote* remotes[];
+
+extern struct remote * remotes[];
 
 void ReceiveISR() {
     if (PIR1bits.CCP1IF) {
@@ -19,8 +20,11 @@ void ReceiveISR() {
         //CCPR1H = TMR1H;  //debug only
         uint16_t cval = ReadRxCapture();
         //       rx_raw(cval);
-        //struct  remote *r;
-        //for (r; r != 0; r++); // r->pRcvFunc(r, cval);
+
+            for (int i = 0; remotes[i]; i++) {
+remotes[i]->rx_func(remotes[i], cval);    }
+
+
         //        terratec_ir_rc.rx_func(&terratec_ir_rc, cval);
         //        yamaha_ir_rc.rx_func(&yamaha_ir_rc, cval);
         //        minfiniy_led.rx_func(&minfiniy_led, cval);  //todo:

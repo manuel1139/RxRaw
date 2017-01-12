@@ -39,13 +39,16 @@ void init_uart(void) {
     RCSTAbits.SPEN = 1; // enable serial port
 }
  */
-    extern struct remote terratec_ir_rc;
+extern struct remote terratec_ir_rc;
+extern struct remote yamaha_ir_rc;
+extern struct remote minfiniy_led;
 
-    struct remote * remotes[] = {
-        &terratec_ir_rc,
-        0
-    };
-
+struct remote * remotes[] = {
+    &terratec_ir_rc,
+    &yamaha_ir_rc,
+    &minfiniy_led,
+    0
+};
 
 int main(void) {
 
@@ -59,11 +62,12 @@ int main(void) {
 
     for (int i = 0; remotes[i]; i++) {
         remotes[i]->init_rx(remotes[i]);
+        remotes[i]->init_tx(remotes[i]);
     }
     ir_rx_start();
 
 #if defined(__18F2550)
-    ir_tx_start();
+ //   ir_tx_start();
 #endif
 
     /*
@@ -87,9 +91,13 @@ int main(void) {
 
 
     while (1) {
-/*
-        for (long i = 0; i < 1200000; i++);
-        send_code(&yamaha_ir_rc, Y_VOL_UP);
+        //check for received codes
+        for (int i = 0; remotes[i]; i++) {
+            //remotes[i];
+        }
+
+        //        tm_code(target (func_module), code)
+        /*transmit */ send_code(&yamaha_ir_rc, Y_VOL_UP);
         if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[0]) {
             //           send_code(&pollin_rf_rc, S3_ON);
 
@@ -111,7 +119,7 @@ int main(void) {
             minfiniy_led.rx_data.code_found = 0;
 
         }
-        */
+
 
         if (USBGetDeviceState() < CONFIGURED_STATE) {
             /* Jump back to the top of the while loop. */
