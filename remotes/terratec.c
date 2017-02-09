@@ -9,10 +9,10 @@ struct remote terratec_ir_rc = {
     "Terratec",
     0x3575, //header_a
     0x199C, //header_b
-    0, //low_1
-    0, //high_1
-    0,
-    0,
+    0x0385,
+    0x08E5,
+    0x03BD, //low
+    0x026F, //high
     0, //tail
     0x28D7, //pre_code
     32,

@@ -38,15 +38,18 @@ void send_code(struct remote* r, uint16_t code) {
     if (transmitter_state == 0) {
         transmitter_state = 1;
         r->tx_data.code_to_send = code;
-        INTCONbits.TMR0IF = 1;
+        INTCONbits.TMR0IF = 1;   //generate int via software 
+                                 //to avoid double function generation
     }
 }
 
 void TransmitISR() {
     if (INTCONbits.TMR0IF) {
         for (int i = 0; remotes[i]; i++) {
-            if (remotes[i]->tx_data.code_to_send != 0)
+            if (remotes[i]->tx_data.code_to_send != 0) {
+                CCP1CON = 0; //disable enabled in the TMR ISR
                 remotes[i]->tx_func(remotes[i]);
+            }
         }
         INTCONbits.TMR0IF = 0;
     }

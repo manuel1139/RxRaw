@@ -16,6 +16,8 @@ void SYSTEM_Initialize(void)
     /*******************************************************************/
     INTCONbits.GIEH = 1;
     INTCONbits.GIEL = 1;
+    INTCONbits.PEIE = 1;
+    
     RCONbits.IPEN = 1; //Interrupt priority
     
     IR_OUT_TRIS = OUTPUT_PIN;

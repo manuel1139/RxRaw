@@ -8,7 +8,7 @@ void SYSTEM_Initialize(void)
     // Enable System Interupts
     /*******************************************************************/
     INTCONbits.GIE = 1;
-    INTCONbits.GPIE = 1;
+    INTCONbits.PEIE = 1;
 }
 
 

@@ -23,7 +23,6 @@ void OpenRxCapture(uint8_t cfg) {
     CCP1CON = cfg & 0x0F;
     PIR1bits.CCP1IF = 0; // Clear the interrupt flag
     PIE1bits.CCP1IE = 1; // Enable the interrupt
-
 }
 
 uint16_t ReadRxCapture() {

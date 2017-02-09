@@ -1,12 +1,12 @@
 #include "timer_rx.h"
 
 /**************************************************************
- T1CON
+ T1CON rimeout and reset timer
 
 76543210
 1	  16 bit rw
  0	  T1RUN t1 run in osc mode (read only)
-  11      1:8 prescaler
+  11      1:8 prescaler  01   1:2 prescaler
     0     Timer1 osc off
      0
       0    Internal clock	 
@@ -17,8 +17,6 @@ void OpenRxTimer() {
     T1CON = 0b10110001;
     TMR1H = 0;
     TMR1L = 0;
-    T3CONbits.T3CCP2 = 0;
-    T3CONbits.T3CCP1 = 0;
     PIR1bits.TMR1IF = 0;
     PIE1bits.TMR1IE = 1;
     

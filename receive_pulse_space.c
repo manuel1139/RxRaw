@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "system.h"
 #include "remote.h"
 
 bool chk_bit_bounds(struct remote* r, uint16_t a, uint16_t b) {
@@ -40,6 +41,7 @@ void ir_rx_pulse_space(struct remote* r, uint16_t bit_time) {
             r->rx_state = header_a;
             break;
         case header_a:
+          LED2 = 1;
             //allow 1/16 bit time as difference
             chk_hdr_bounds(r->hdr_time_a, bit_time) ? r->rx_state = header_b :
                     r->rx_state = not_me;
@@ -47,36 +49,42 @@ void ir_rx_pulse_space(struct remote* r, uint16_t bit_time) {
         case header_b:
             chk_hdr_bounds(r->hdr_time_b, bit_time) ? r->rx_state = first_edge :
                     r->rx_state = not_me;
-            break;
+            break;          
         case first_edge:
             r->rx_data.edge_a = bit_time;
             r->rx_state = second_edge;
             break;
         case second_edge:
-            if (r->rx_data.bit_cnt < r->bit_cnt) {
+            if (r->rx_data.bit_id < r->bit_cnt) {
                 chk_bit_bounds(r, r->rx_data.edge_a, bit_time) ?
                         r->rx_state = first_edge : r->rx_state = not_me;
                 if (r->rx_state == not_me) break;
 
-                r->rx_data.word_cnt = r->rx_data.bit_cnt / 16;
+                r->rx_data.word_id = r->rx_data.bit_id / 16;
 
-                r->rx_data.word[r->rx_data.word_cnt] <<= 1;
-                //TODO:: might NOT alwas work!
+                r->rx_data.word[r->rx_data.word_id] <<= 1;
+                //TODO:: might NOT always work!
                 if (r->rx_data.edge_a > bit_time) {
 
-                    r->rx_data.word[r->rx_data.word_cnt] |= 1;
+                    r->rx_data.word[r->rx_data.word_id] |= 1;
                 }
-                r->rx_data.bit_cnt++;
+                r->rx_data.bit_id++;
             } else {
-                //todo: check bit count
+                //check pre-data 
+                //r-> == r->rx_data.word[0]; else not_me
                 r->rx_data.code_found = r->rx_data.word[1];
-                //                r->init(r);  //? wait  for next timeout
+                r->rx_state = done;
+
             }
             break;
+            
         case not_me:
+            break;
+        case done:
+            //todo: check repeat code
+            LED2 = 0;
             break;
         default:
             break;
-
     }
 }

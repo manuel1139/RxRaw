@@ -43,8 +43,8 @@ extern void tx_pulse_space(struct remote*);
 
 typedef struct {
     uint16_t edge_a;
-    uint8_t word_cnt;
-    uint8_t bit_cnt;
+    uint8_t word_id;
+    uint8_t bit_id;
     uint16_t word[2]; //todo: allow for other size?  
     uint16_t code_found;
 } rx_data;

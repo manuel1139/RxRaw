@@ -31,7 +31,6 @@ void dev_send(enum device_type dt) {
 
 void tx_pulse_space(struct remote* r) {
     dt = DT_IR;
-    CloseRxCapture();
     switch (r->tx_state) {
         case idle:
             r->tx_state = header_a;

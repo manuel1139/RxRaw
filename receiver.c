@@ -15,32 +15,39 @@ extern struct remote * remotes[];
 void ReceiveISR() {
     if (PIR1bits.CCP1IF) {
         //inverts edge detection 
-        CCP1CONbits.CCP1M0 = CCP1CONbits.CCP1M0 ^ 1; //invert edge detection
+        //        PIE1bits.CCP1IE = 0;
+        CCP1CONbits.CCP1M0 = CCP1CONbits.CCP1M0 ^ 1;
 
-        //CCPR1H = TMR1H;  //debug only
         uint16_t cval = ReadRxCapture();
-        //       rx_raw(cval);
+        //ticks to millis
+        cval = cval * 2 / 3;
+        rx_raw(cval); //todo:
 
-            for (int i = 0; remotes[i]; i++) {
-remotes[i]->rx_func(remotes[i], cval);    }
+        for (int i = 0; remotes[i]; i++) {
+            remotes[i]->rx_func(remotes[i], cval);
+        }
 
-
-        //        terratec_ir_rc.rx_func(&terratec_ir_rc, cval);
-        //        yamaha_ir_rc.rx_func(&yamaha_ir_rc, cval);
-        //        minfiniy_led.rx_func(&minfiniy_led, cval);  //todo:
-        //todo: list of "receiving reomtes (in main)))
         WriteRxTimer(0);
+        //        PIE1bits.CCP1IE = 1;
         PIR1bits.CCP1IF = 0;
     }
 
     if (PIR1bits.TMR1IF) {
-        //rx_raw_timeo();
+        rx_raw_timeo();
+        //rx timeout();
         for (int i = 0; remotes[i]; i++) {
-            remotes[i]->init_rx(remotes[i]);
+        //    if (!remotes[i]->rx_data.code_found)
+                remotes[i]->init_rx(remotes[i]);
+        //    else {
+        //        uint16_t c = remotes[i]->rx_data.code_found;
+        //    }
         }
-        CCP1CONbits.CCP1M0 = 0; //capture every falling edge
+        //reseet to active high/low depending on receiver
+        //state after timeout 
+        CCP1CON = 0; //
+        IR_RCV ? CCP1CON = 0b100 : CCP1CON = 0b101;
         PIR1bits.TMR1IF = 0;
-
+//        LED2=0;
     }
 }
 

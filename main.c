@@ -7,7 +7,7 @@
  * 
  * TMR0 for transmitting RF data 
  * 
- * TMR2 for PSWM IR Transmitter @ 38khz TMR0
+ * TMR2 for PWM IR Transmitter @ 38khz TMR0
 
 
 
@@ -45,10 +45,45 @@ extern struct remote minfiniy_led;
 
 struct remote * remotes[] = {
     &terratec_ir_rc,
-    &yamaha_ir_rc,
-    &minfiniy_led,
+//    &yamaha_ir_rc,
+//    &minfiniy_led,
     0
 };
+
+
+int send_data(void) {
+          //check for received codes
+        for (int i = 0; remotes[i]; i++) {
+            //remotes[i];
+        }
+
+        //        tm_code(target (func_module), code)
+        /*transmit */ send_code(&yamaha_ir_rc, Y_VOL_UP);
+        if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[0]) {
+            //           send_code(&pollin_rf_rc, S3_ON);
+
+            send_code(&yamaha_ir_rc, Y_VOL_UP);
+
+            //  send_code(&pollin_rf_rc, S3_ON);
+            // send_code(&pollin_rf_rc, S3_ON);
+
+            minfiniy_led.rx_data.code_found = 0;
+        } else
+            if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[1]) {
+            //         send_code(&pollin_rf_rc, S3_OFF);
+
+            send_code(&yamaha_ir_rc, Y_VOL_DOWN);
+
+            //  send_code(&pollin_rf_rc, S3_OFF);
+            //  send_code(&pollin_rf_rc, S3_OFF);
+
+            minfiniy_led.rx_data.code_found = 0;
+
+        }
+
+
+}
+
 
 int main(void) {
 
@@ -91,36 +126,7 @@ int main(void) {
 
 
     while (1) {
-        //check for received codes
-        for (int i = 0; remotes[i]; i++) {
-            //remotes[i];
-        }
-
-        //        tm_code(target (func_module), code)
-        /*transmit */ send_code(&yamaha_ir_rc, Y_VOL_UP);
-        if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[0]) {
-            //           send_code(&pollin_rf_rc, S3_ON);
-
-            send_code(&yamaha_ir_rc, Y_VOL_UP);
-
-            //  send_code(&pollin_rf_rc, S3_ON);
-            // send_code(&pollin_rf_rc, S3_ON);
-
-            minfiniy_led.rx_data.code_found = 0;
-        } else
-            if (minfiniy_led.rx_data.code_found == minfiniy_led.keys[1]) {
-            //         send_code(&pollin_rf_rc, S3_OFF);
-
-            send_code(&yamaha_ir_rc, Y_VOL_DOWN);
-
-            //  send_code(&pollin_rf_rc, S3_OFF);
-            //  send_code(&pollin_rf_rc, S3_OFF);
-
-            minfiniy_led.rx_data.code_found = 0;
-
-        }
-
-
+  
         if (USBGetDeviceState() < CONFIGURED_STATE) {
             /* Jump back to the top of the while loop. */
             continue;
