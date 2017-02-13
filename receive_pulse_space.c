@@ -41,7 +41,6 @@ void ir_rx_pulse_space(struct remote* r, uint16_t bit_time) {
             r->rx_state = header_a;
             break;
         case header_a:
-          LED2 = 1;
             //allow 1/16 bit time as difference
             chk_hdr_bounds(r->hdr_time_a, bit_time) ? r->rx_state = header_b :
                     r->rx_state = not_me;
@@ -82,7 +81,6 @@ void ir_rx_pulse_space(struct remote* r, uint16_t bit_time) {
             break;
         case done:
             //todo: check repeat code
-            LED2 = 0;
             break;
         default:
             break;

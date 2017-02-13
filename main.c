@@ -44,8 +44,8 @@ extern struct remote yamaha_ir_rc;
 extern struct remote minfiniy_led;
 
 struct remote * remotes[] = {
-    &terratec_ir_rc,
-//    &yamaha_ir_rc,
+//    &terratec_ir_rc,
+    &yamaha_ir_rc,
 //    &minfiniy_led,
     0
 };

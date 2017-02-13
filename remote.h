@@ -36,9 +36,7 @@ typedef void (*pTxFunc)(struct remote*);
 
 typedef void (*pInitFunc)(struct remote*);
 
-//extern void ir_rx_pulse_space(struct remote*, struct ir_code); todo
 extern void ir_rx_pulse_space(struct remote*, uint16_t);
-
 extern void tx_pulse_space(struct remote*);
 
 typedef struct {

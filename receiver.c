@@ -10,6 +10,8 @@
 #include "system.h"
 
 
+#define ZZDEBUG
+
 extern struct remote * remotes[];
 
 void ReceiveISR() {
@@ -19,10 +21,12 @@ void ReceiveISR() {
         CCP1CONbits.CCP1M0 = CCP1CONbits.CCP1M0 ^ 1;
 
         uint16_t cval = ReadRxCapture();
-        //ticks to millis
+        //ticks to microseconds
+        //TICS2US();)
         cval = cval * 2 / 3;
+#if defined ZZDEBUG
         rx_raw(cval); //todo:
-
+#endif
         for (int i = 0; remotes[i]; i++) {
             remotes[i]->rx_func(remotes[i], cval);
         }
@@ -33,8 +37,9 @@ void ReceiveISR() {
     }
 
     if (PIR1bits.TMR1IF) {
+#if defined ZZDEBUG
         rx_raw_timeo();
-        //rx timeout();
+#endif
         for (int i = 0; remotes[i]; i++) {
         //    if (!remotes[i]->rx_data.code_found)
                 remotes[i]->init_rx(remotes[i]);

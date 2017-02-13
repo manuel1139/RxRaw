@@ -18,20 +18,22 @@ extern "C" {
 #define OUTPUT_PIN 0
 #define INPUT_PIN 1
 
-/*
- * 
-When Timer1 is enabled, the RC1/T1OSI/UOE and
-RC0/T1OSO/T13CKI pins become inputs. This means
-the values of TRISC<1:0> are ignored and the pins are
-read as ?0?.
- * 
- */    
+    /*
+     * 
+    When Timer1 is enabled, the RC1/T1OSI/UOE and
+    RC0/T1OSO/T13CKI pins become inputs. This means
+    the values of TRISC<1:0> are ignored and the pins are
+    read as ?0?.
+     * 
+     */
 
-//#define IR_RCV_TRIS TRISCbits.TRISC2 see above timer1
+    //#define IR_RCV_TRIS TRISCbits.TRISC2 see above timer1
 
 #define IR_RCV GP2
-    
-void SYSTEM_Initialize(void);
+#define KEY1 GP1
+#define LED1 GP3    
+
+    void SYSTEM_Initialize(void);
 
 #ifdef	__cplusplus
 }

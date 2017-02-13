@@ -7,12 +7,13 @@ const uint16_t yamaha_codes[] = {
 
 struct remote yamaha_ir_rc = {
     "Yamaha",
-    0x3518, //header_a
-    0x19B5, //header_b
-    0x361, //a_1  
-    0x2A5, //b_1 
-    0x361, //a_0
-    0x91A, //b_0
+    //counter to tail are in us
+    9000, //header_a in us
+    4500, //header_b
+    460, //a_1  
+    520, //b_1 
+    520, //a_0
+    1600, //b_0
     0x0, //tail    
     0xA15E, //
     32, //bit count

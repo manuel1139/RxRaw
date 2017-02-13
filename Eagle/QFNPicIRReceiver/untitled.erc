@@ -1,0 +1,16 @@
+EAGLE Version 4.16r2 Copyright (c) 1988-2006 CadSoft
+
+Electrical Rule Check für C:/Programme/EAGLE-4.16r2/projects/QFNPicIRReceiver/untitled.sch am 11.04.2008 15:00:31 
+
+WARNUNG: Seite 1/1: POWER-Pin IC1 VSS verbunden mit GND
+WARNUNG: Seite 1/1: POWER-Pin IC1 VSS verbunden mit GND
+WARNUNG: Seite 1/1: POWER-Pin IC1 VDD verbunden mit VCC
+WARNUNG: Seite 1/1: POWER-Pin IR1 VS verbunden mit N$2
+WARNUNG: Seite 1/1: POWER-Pin QG1 VSS verbunden mit GND
+WARNUNG: Seite 1/1: POWER-Pin QG1 VDD verbunden mit VCC
+WARNUNG: Seite 1/1, Netz IRDATA: Wire überlappt Pin an Position (0.9 2.7)
+
+Board und Schaltplan sind konsistent
+
+    0 Fehler
+    7 Warnungen

@@ -25,7 +25,7 @@ int main(void) {
     while(1);
 }
 
-void high_priority interrupt high_isr(void) {
+void  interrupt high_isr(void) {
     ReceiveISR();
 }
 
